@@ -1,0 +1,11 @@
+{
+  "name": "aliDDNS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:bclz-wyz/AliDdnsNodeJS.git",
+  "author": "bclz <“bclz@foxmail.com\ngit config --global user.email “bclz@foxmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@alicloud/pop-core": "^1.7.9"
+  }
+}
