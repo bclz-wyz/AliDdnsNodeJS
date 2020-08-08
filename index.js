@@ -7,14 +7,22 @@ const axios = require('axios');
 const uuid = require('uuid');
 const uuidv1 = uuid.v1;
 const schedule = require('node-schedule');
-
-const execSync = require('child_process').execSync;
-
 const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 
-const checkIpv6 = execSync(`busybox ifconfig rmnet_data1`)
-console.log(checkIpv6.stderr.toString())
-console.log(checkIpv6.stdout.toString())
+//通过网卡检测IP
+const exec = require('child_process').exec;
+const shell_ip = 'busybox ifconfig rmnet_data1';
+const checkIpv6 = ()=>{
+    exec(shell_ip, function(err,stdout,stderr){
+        if(err) {
+            console.log('get weather api error:'+stderr);
+        }else{
+            console.log(stdout);
+        }
+    });
+}
+
+
 
 //配置axios拦截器
 
@@ -42,7 +50,8 @@ async function main() {
     const calcDate = new Date(calctime);
 
 	console.log(calcDate.toLocaleString(), '正在更新DNS记录 ...');
-	const ip = await getExternalIP();
+    // const ip = await getExternalIP();
+    const ip = checkIpv6();
 	console.log(calcDate.toLocaleString(), '当前外网 ip:', ip);
     const records = await getDomainInfo();
 	if (!records.length) {
