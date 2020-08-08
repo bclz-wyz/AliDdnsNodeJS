@@ -10,20 +10,13 @@ const schedule = require('node-schedule');
 const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 
 //通过网卡检测IP
-const exec = require('child_process').exec;
-const shell_ip = 'ifconfig rmnet_data1';
+const execSync = require('child_process').execSync;
+// const shell_ip = `ifconfig rmnet_data1 | grep 'inet6' | awk '{print $2}' | sed -e "s/addr\://" | head -n 1`;
 const checkIpv6 = ()=>{
-    exec(shell_ip, function(err,stdout,stderr){
-        if(err) {
-            console.log('get weather api error:'+stderr);
-        }else{
-            console.log(typeof(stdout));
-            return stdout
-        }
-    });
+    const shell_echo = execSync(`ifconfig rmnet_data1 | grep 'inet6' | awk '{print $2}' | sed -e "s/addr\://" | head -n 1`);
+    const shell_str = shell_echo.toString("utf-8").trim()
+    return shell_str
 }
-
-
 
 //配置axios拦截器
 
@@ -37,7 +30,7 @@ const HttpInstance = axios.create({
 main();
 
 // 每十五分钟更新一次
-schedule.scheduleJob('*/15 * * * *', function() {
+schedule.scheduleJob('* /1 * * * *', function() {
 	main();
 });
 
@@ -52,7 +45,7 @@ async function main() {
 
 	console.log(calcDate.toLocaleString(), '正在更新DNS记录 ...');
     // const ip = await getExternalIP();
-    const ip = checkIpv6();
+    const ip = checkIpv6()
 	console.log(calcDate.toLocaleString(), '当前外网 ip:', ip);
     const records = await getDomainInfo();
 	if (!records.length) {
@@ -75,7 +68,7 @@ function addRecord(ip) {
 			Action: 'AddDomainRecord',
 			DomainName: Domain.match(/\.(.*)/)[1],
 			RR: Domain.match(/(.*?)\./)[1],
-			Type: 'A',
+			Type: 'AAAA',
 			Value: ip
 		}, commonParams()));
 		const Signature = sign(requestParams);
@@ -100,7 +93,7 @@ function updateRecord(id, ip) {
 			Action: 'UpdateDomainRecord',
 			RecordId: id,
 			RR: Domain.match(/(.*?)\./)[1],
-			Type: 'A',
+			Type: 'AAAA',
 			Value: ip
 		}, commonParams()));
 		const Signature = sign(requestParams);
