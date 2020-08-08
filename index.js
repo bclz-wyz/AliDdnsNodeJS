@@ -13,7 +13,8 @@ const execSync = require('child_process').execSync;
 const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 
 const checkIpv6 = execSync(`busybox ifconfig rmnet_data1`)
-console.log(checkIpv6)
+console.log(checkIpv6.stderr.toString())
+console.log(checkIpv6.stdout.toString())
 
 //配置axios拦截器
 
