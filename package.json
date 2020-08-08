@@ -6,7 +6,7 @@
     "author": "bclz <“bclz@foxmail.com\ngit config --global user.email “bclz@foxmail.com>",
     "license": "MIT",
     "scripts": {
-        "server": "./node_modules/.bin/pm2 start nodemon index.js --name=aliyun-ddns",
+        "server": "pm2 start nodemon index.js --name='aliyun-ddns'",
         "dev": "nodemon index.js"
     },
     "dependencies": {
