@@ -11,7 +11,7 @@ const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 
 //通过网卡检测IP
 const exec = require('child_process').exec;
-const shell_ip = 'busybox ifconfig rmnet_data1';
+const shell_ip = 'ifconfig rmnet_data1';
 const checkIpv6 = ()=>{
     exec(shell_ip, function(err,stdout,stderr){
         if(err) {
