@@ -13,11 +13,12 @@ const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 const exec = require('child_process').exec;
 const shell_ip = 'ifconfig rmnet_data1';
 const checkIpv6 = ()=>{
-    exec(shell_ip, function(err,stdout,stderr){
+    return exec(shell_ip, function(err,stdout,stderr){
         if(err) {
             console.log('get weather api error:'+stderr);
         }else{
-            console.log(stdout);
+            console.log(typeof(stdout));
+            return stdout
         }
     });
 }
