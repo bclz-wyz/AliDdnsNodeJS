@@ -1,11 +1,21 @@
 {
-  "name": "aliDDNS",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:bclz-wyz/AliDdnsNodeJS.git",
-  "author": "bclz <“bclz@foxmail.com\ngit config --global user.email “bclz@foxmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "@alicloud/pop-core": "^1.7.9"
-  }
+    "name": "aliDDNS",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:bclz-wyz/AliDdnsNodeJS.git",
+    "author": "bclz <“bclz@foxmail.com\ngit config --global user.email “bclz@foxmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "server": "./node_modules/.bin/pm2 start nodemon index.js --name=aliyun-ddns",
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "@alicloud/pop-core": "^1.7.9",
+        "axios": "^0.19.2",
+        "crypto": "^1.0.1",
+        "node-schedule": "^1.3.2",
+        "nodemon": "^2.0.4",
+        "pm2": "^4.4.0",
+        "uuid": "^8.3.0"
+    }
 }
