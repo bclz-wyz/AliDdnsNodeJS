@@ -13,7 +13,7 @@ const { AccessKey, AccessKeySecret, Domain,  } = require('./config.json');
 const execSync = require('child_process').execSync;
 // const shell_ip = `ifconfig rmnet_data1 | grep 'inet6' | awk '{print $2}' | sed -e "s/addr\://" | head -n 1`;
 const checkIpv6 = ()=>{
-    const shell_echo = execSync(`ifconfig rmnet_data1 | grep 'inet6' | awk '{print $2}' | sed -e "s/addr\://" | head -n 1`);
+    const shell_echo = execSync(`ifconfig rmnet_data1 | grep 'inet6' | grep -v *link* | awk '{print $2}' | sed -e "s/addr\://" | head -n 1`);
     const shell_str = shell_echo.toString("utf-8").trim()
     return shell_str
 }
